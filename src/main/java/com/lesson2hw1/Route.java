@@ -1,6 +1,7 @@
 package com.lesson2hw1;
 
 import java.util.List;
+import java.util.Random;
 
 public class Route {
 
@@ -13,6 +14,10 @@ public class Route {
     }
 
     public Route() {
+    }
+
+    public void beanInit() {
+        id = String.valueOf(new Random().nextLong());
     }
 
     public String getId() {
@@ -29,5 +34,13 @@ public class Route {
 
     public void setSteps(List steps) {
         this.steps = steps;
+    }
+
+    @Override
+    public String toString() {
+        return "Route{" +
+                "id='" + id + '\'' +
+                ", steps=" + steps +
+                '}';
     }
 }

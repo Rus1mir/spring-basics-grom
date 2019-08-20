@@ -12,7 +12,7 @@ public class Controller {
     private Route route;
 
     @Autowired
-    private Service service;
+    private Service service1;
 
     @Autowired
     private Step step;
@@ -21,18 +21,19 @@ public class Controller {
     public @ResponseBody
     String callByBean() {
 
-        route.getId();
-        route.getSteps();
 
-        service.getId();
-        service.getName();
-        service.getParamsToCall();
+        System.out.println(route.getId());
+        System.out.println(route.getSteps());
 
-        step.getId();
-        step.getParamsServiceFrom();
-        step.getParamsServiceTo();
-        step.getServiceFrom();
-        step.getServiceTo();
+        System.out.println(service1.getId());
+        System.out.println(service1.getName());
+        System.out.println(service1.getParamsToCall());
+
+        System.out.println(step.getId());
+        System.out.println(step.getParamsServiceFrom());
+        System.out.println(step.getParamsServiceTo());
+        System.out.println(step.getServiceFrom());
+        System.out.println(step.getServiceTo());
 
         return "OK";
     }

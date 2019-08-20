@@ -1,6 +1,9 @@
 package com.lesson2hw1;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Service {
 
@@ -15,6 +18,10 @@ public class Service {
     }
 
     public Service() {
+    }
+
+    public void beanInit() {
+        id = new Random().nextLong();
     }
 
     public Long getId() {
@@ -39,5 +46,14 @@ public class Service {
 
     public void setParamsToCall(List paramsToCall) {
         this.paramsToCall = paramsToCall;
+    }
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", paramsToCall=" + paramsToCall +
+                '}';
     }
 }

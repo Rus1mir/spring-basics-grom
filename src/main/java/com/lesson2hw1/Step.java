@@ -1,6 +1,7 @@
 package com.lesson2hw1;
 
 import java.util.Map;
+import java.util.Random;
 
 public class Step {
 
@@ -19,6 +20,10 @@ public class Step {
     }
 
     public Step() {
+    }
+
+    public void beanInit() {
+        id = new Random().nextLong();
     }
 
     public Long getId() {
@@ -59,5 +64,16 @@ public class Step {
 
     public void setParamsServiceTo(Map paramsServiceTo) {
         this.paramsServiceTo = paramsServiceTo;
+    }
+
+    @Override
+    public String toString() {
+        return "Step{" +
+                "id=" + id +
+                ", serviceFrom=" + serviceFrom +
+                ", serviceTo=" + serviceTo +
+                ", paramsServiceFrom=" + paramsServiceFrom +
+                ", paramsServiceTo=" + paramsServiceTo +
+                '}';
     }
 }

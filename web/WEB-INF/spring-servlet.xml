@@ -4,12 +4,61 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       default-init-method="beanInit">
+
     <context:component-scan base-package="com"/>
 
-    <bean id="route" class="com.lesson2hw1.Route"/>
+    <bean id="service1" class="com.lesson2hw1.Service">
+        <property name="name" value="Service1"/>
+        <property name="paramsToCall">
+            <list>
+                <value> Param1</value>
+                <value> Param2</value>
+                <value> Param3</value>
+            </list>
+        </property>
+    </bean>
 
-    <bean id="service" class="com.lesson2hw1.Service"/>
+    <bean id="service2" class="com.lesson2hw1.Service">
+        <property name="name" value="Service1"/>
+        <property name="paramsToCall">
+            <list>
+                <value> Param1</value>
+                <value> Param2</value>
+                <value> Param3</value>
+            </list>
+        </property>
+    </bean>
 
-    <bean id="step" class="com.lesson2hw1.Step"/>
+    <bean id="step" class="com.lesson2hw1.Step">
+        <property name="ServiceFrom" ref="service1"/>
+        <property name="ServiceTo" ref="service2"/>
+        <property name="paramsServiceFrom">
+            <map>
+                <entry key="Param1" value="1"/>
+                <entry key="Param2" value="2"/>
+                <entry key="Param3" value="3"/>
+            </map>
+        </property>
+        <property name="paramsServiceTo">
+            <map>
+                <entry key="Param1" value="1"/>
+                <entry key="Param2" value="2"/>
+                <entry key="Param3" value="3"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="route" class="com.lesson2hw1.Route">
+        <property name="steps">
+            <list>
+                <value> step </value>
+            </list>
+        </property>
+    </bean>
+
+
+
+
 </beans>
