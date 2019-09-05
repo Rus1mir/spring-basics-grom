@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.ArrayList;
@@ -18,13 +17,6 @@ import java.util.ArrayList;
 @EnableWebMvc
 @ComponentScan(basePackages = "com")
 public class WebConfig {
-
-    @Bean()
-    DispatcherServlet dispatcherServlet() {
-        DispatcherServlet dispatcherServlet;
-        dispatcherServlet = new DispatcherServlet();
-        return dispatcherServlet;
-    }
 
     @Bean()
     Test test() {
