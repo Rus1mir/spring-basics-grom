@@ -1,10 +1,6 @@
-package com.config;
+package com.lesson2hw1;
 
 import com.lesson1.Test;
-import com.lesson2hw1.Controller;
-import com.lesson2hw1.Route;
-import com.lesson2hw1.Step;
-import com.lesson2hw1.Service;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
