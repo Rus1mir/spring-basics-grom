@@ -1,13 +1,12 @@
 package com.lesson5hw;
 
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(value = "/item")
@@ -23,46 +22,48 @@ public class ItemController {
     @RequestMapping(method = RequestMethod.POST, value = "/save")
     public ResponseEntity<String> save(@RequestBody Item item) {
 
-        try {
-            itemDao.save(item);
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-        } catch (Exception e) {
-
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        itemDao.save(item);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/find")
-    public ResponseEntity<String> findById(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<String> findById(@RequestParam(value = "id") Long id) throws Exception {
 
-        try {
-            itemDao.findById(id);
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-        } catch (Exception e) {
-
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Item item = itemDao.findById(id);
+        if (item == null)
+            throw new NotFoundException("Item id: " + id + " was not found");
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update")
-    public ResponseEntity<String> update(@RequestBody Item item) {
-        try {
-            itemDao.update(item);
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-        } catch (Exception e) {
+    public ResponseEntity<String> update(@RequestBody Item item) throws Exception {
 
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        if (itemDao.findById(item.getId()) == null)
+            throw new NotFoundException("Item id: " + item.getId() + " was not found");
+
+        itemDao.update(item);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete")
-    public ResponseEntity<String> delete(Long id) {
-        try {
-            itemDao.delete(id);
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-        } catch (Exception e) {
+    public ResponseEntity<String> delete(Long id) throws Exception {
 
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        itemDao.delete(id);
+        return new ResponseEntity<>("ok", HttpStatus.OK);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> error(DataIntegrityViolationException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<String> error(NotFoundException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> error(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
